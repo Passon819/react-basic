@@ -1,7 +1,9 @@
 import Transaction from "./components/Transaction";
 import FormComponent from "./components/FormComponent";
+import ReportComponent from "./components/ReportComponent";
 import "./App.css";
 import { useState } from "react";
+import DataContext from "./data/DataContext";
 
 function App() {
   const design = { color: "red", textAlign: "center", fontSize: "1.5em" };
@@ -23,11 +25,14 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
-      <FormComponent onAddItem={onAddNewItem} />
-      <Transaction items={items} />
-    </div>
+    <DataContext.Provider value={"longger"}>
+      <div className="container">
+        <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
+        <ReportComponent />
+        <FormComponent onAddItem={onAddNewItem} />
+        <Transaction items={items} />
+      </div>
+    </DataContext.Provider>
   );
 }
 
