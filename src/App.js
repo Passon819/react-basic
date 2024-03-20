@@ -25,7 +25,12 @@ function App() {
   };
 
   return (
-    <DataContext.Provider value={"longger"}>
+    <DataContext.Provider
+      value={{
+        expense: -4000,
+        income: 40000,
+      }}
+    >
       <div className="container">
         <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
         <ReportComponent />
