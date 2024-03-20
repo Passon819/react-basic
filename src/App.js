@@ -2,8 +2,9 @@ import Transaction from "./components/Transaction";
 import FormComponent from "./components/FormComponent";
 import ReportComponent from "./components/ReportComponent";
 import "./App.css";
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState } from "react";
 import DataContext from "./data/DataContext";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const design = { color: "red", textAlign: "center", fontSize: "1.5em" };
@@ -36,22 +37,9 @@ function App() {
       amounts
         .filter((element) => element < 0)
         .reduce((total, element) => (total += element), 0) * -1;
-    setReportIncome(income);
-    setReportExpense(expense);
+    setReportIncome(income.toFixed(2));
+    setReportExpense(expense.toFixed(2));
   }, [items, reportIncome, reportExpense]);
-
-  // reducer state
-  const [showReport, setShowReport] = useState(false);
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "SHOW":
-        return setShowReport(true);
-      case "HIDE":
-        return setShowReport(false);
-    }
-  };
-
-  const [result, dispath] = useReducer(reducer, showReport);
 
   return (
     <DataContext.Provider
@@ -62,14 +50,30 @@ function App() {
     >
       <div className="container">
         <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
-        {showReport && <ReportComponent />}
-        <FormComponent onAddItem={onAddNewItem} />
-        <Transaction items={items} />
-        <div align="center">
-          <h1>{result}</h1>
-          <button onClick={() => dispath({ type: "SHOW" })}>แสดง</button>
-          <button onClick={() => dispath({ type: "HIDE" })}>ซ่อน</button>
-        </div>
+        <Router>
+          <div>
+            <ul className="horizontal-menu">
+              <li>
+                <Link to="/">ข้อมูลบัญชี</Link>
+              </li>
+              <li>
+                <Link to="/insert">บันทึกข้อมูล</Link>
+              </li>
+            </ul>
+            <Routes>
+              <Route path="/" element={<ReportComponent />}></Route>
+              <Route
+                path="/insert"
+                element={
+                  <>
+                    <FormComponent onAddItem={onAddNewItem} />
+                    <Transaction items={items} />
+                  </>
+                }
+              ></Route>
+            </Routes>
+          </div>
+        </Router>
       </div>
     </DataContext.Provider>
   );
