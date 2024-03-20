@@ -1,17 +1,27 @@
+import { useState } from "react";
 import "./FormComponent.css";
 
 const FormComponent = () => {
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState(0);
+
   const inputTitle = (event) => {
-    console.log(event.target.value);
+    setTitle(event.target.value);
   };
 
   const inputAmount = (event) => {
-    console.log(event.target.value);
+    setAmount(event.target.value);
   };
 
   const saveItem = (event) => {
     event.preventDefault();
-    console.log("savedd");
+    const itemData = {
+      title: title,
+      amount: Number(amount),
+    };
+    console.log(itemData);
+    setTitle("");
+    setAmount(0);
   };
 
   return (
@@ -23,6 +33,7 @@ const FormComponent = () => {
             type="text"
             placeholder="ระบุชื่อรายการของคุณ"
             onChange={inputTitle}
+            value={title}
           />
         </div>
         <div className="form-control">
@@ -31,6 +42,7 @@ const FormComponent = () => {
             type="number"
             placeholder="(+ รายรับ, - รายจ่าย)"
             onChange={inputAmount}
+            value={amount}
           />
         </div>
         <div>
