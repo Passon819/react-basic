@@ -1,12 +1,11 @@
 import Transaction from "./components/Transaction";
-
-const Description = () => <p>บันทึกข้อมูลบัญชีในแต่ละวันของคุณ</p>;
+import "./App.css";
 
 function App() {
+  const design = { color: "red", textAlign: "center", fontSize: "1.5em" };
   return (
-    <div>
-      <h1>แอพบัญชีรายรับ-รายจ่าย</h1>
-      <Description />
+    <div className="container">
+      <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
       <Transaction />
     </div>
   );
