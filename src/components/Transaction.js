@@ -11,8 +11,9 @@ const Transaction = () => {
 
   return (
     <ul className="item-list">
+      {/* spread operator can use when property name of component is same with data property name */}
       {data.map((element) => {
-        return <Item title={element.title} amount={element.amount} />;
+        return <Item {...element} />;
       })}
     </ul>
   );
