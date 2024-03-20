@@ -1,8 +1,7 @@
-const Item = () => {
-  const name = "ค่าเดินทางต่างจังหวัด";
+const Item = (props) => {
   return (
     <li>
-      {name} <span>-200</span>
+      {props.title} <span>{props.amount}</span>
     </li>
   );
 };
