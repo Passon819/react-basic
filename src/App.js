@@ -41,42 +41,37 @@ function App() {
   }, [items, reportIncome, reportExpense]);
 
   // reducer state
-  const [count, setCount] = useState(0);
+  const [showReport, setShowReport] = useState(false);
   const reducer = (state, action) => {
     switch (action.type) {
-      case "ADD":
-        return state + action.payload;
-      case "SUB":
-        return state - action.payload;
-      case "CLEAR":
-        return 0;
+      case "SHOW":
+        return setShowReport(true);
+      case "HIDE":
+        return setShowReport(false);
     }
   };
 
-  const [result, dispath] = useReducer(reducer, count);
+  const [result, dispath] = useReducer(reducer, showReport);
 
   return (
-    // <DataContext.Provider
-    //   value={{
-    //     income: reportIncome,
-    //     expense: reportExpense,
-    //   }}
-    // >
-    //   <div className="container">
-    //     <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
-    //     <ReportComponent />
-    //     <FormComponent onAddItem={onAddNewItem} />
-    //     <Transaction items={items} />
-    //   </div>
-    // </DataContext.Provider>
-    <div align="center">
-      <h1>{result}</h1>
-      <button onClick={() => dispath({ type: "ADD", payload: 10 })}>
-        เพิ่ม
-      </button>
-      <button onClick={() => dispath({ type: "SUB", payload: 5 })}>ลด</button>
-      <button onClick={() => dispath({ type: "CLEAR" })}>ล้าง</button>
-    </div>
+    <DataContext.Provider
+      value={{
+        income: reportIncome,
+        expense: reportExpense,
+      }}
+    >
+      <div className="container">
+        <h1 style={design}>แอพบัญชีรายรับ-รายจ่าย</h1>
+        {showReport && <ReportComponent />}
+        <FormComponent onAddItem={onAddNewItem} />
+        <Transaction items={items} />
+        <div align="center">
+          <h1>{result}</h1>
+          <button onClick={() => dispath({ type: "SHOW" })}>แสดง</button>
+          <button onClick={() => dispath({ type: "HIDE" })}>ซ่อน</button>
+        </div>
+      </div>
+    </DataContext.Provider>
   );
 }
 
