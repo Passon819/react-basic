@@ -2,7 +2,7 @@ import Transaction from "./components/Transaction";
 import FormComponent from "./components/FormComponent";
 import ReportComponent from "./components/ReportComponent";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataContext from "./data/DataContext";
 
 function App() {
@@ -14,6 +14,9 @@ function App() {
     { id: 4, title: "ค่าประกันรถ", amount: 600 },
   ];
 
+  const [reportIncome, setReportIncome] = useState(0);
+  const [reportExpense, setReportExpense] = useState(0);
+
   // replace [] in useState for emtry init data.
   const [items, setItems] = useState(initData);
 
@@ -24,11 +27,24 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    const amounts = items.map((item) => item.amount);
+    const income = amounts
+      .filter((element) => element > 0)
+      .reduce((total, element) => (total += element), 0);
+    const expense =
+      amounts
+        .filter((element) => element < 0)
+        .reduce((total, element) => (total += element), 0) * -1;
+    setReportIncome(income);
+    setReportExpense(expense);
+  }, [items, reportIncome, reportExpense]);
+
   return (
     <DataContext.Provider
       value={{
-        expense: -4000,
-        income: 40000,
+        income: reportIncome,
+        expense: reportExpense,
       }}
     >
       <div className="container">
