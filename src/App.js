@@ -9,10 +9,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function App() {
   const design = { color: "red", textAlign: "center", fontSize: "1.5em" };
   const initData = [
-    { id: 1, title: "ค่าเดินทาง", amount: 5000 },
+    { id: 1, title: "ค่าเดินทาง", amount: -5000 },
     { id: 2, title: "เงินเดือน", amount: 26000 },
-    { id: 3, title: "ค่ารักษาพยาบาล", amount: 1000 },
-    { id: 4, title: "ค่าประกันรถ", amount: 600 },
+    { id: 3, title: "ค่ารักษาพยาบาล", amount: -1000 },
   ];
 
   const [reportIncome, setReportIncome] = useState(0);
